@@ -1,0 +1,110 @@
+body {
+	font-family: 'Microsoft Yahei', sans-serif;
+	background: #eee;
+}
+.bs-sidenav li {
+	padding-left: 2px;
+	margin-left: 0;
+}
+.bs-sidenav .active {
+	font-weight: 700;
+	color: #563d7c;
+	background-color: transparent;
+	padding-left: 0;
+	border-left: 2px solid #563d7c;
+}
+.bs-sidenav a {
+	color: #333;
+}
+.bs-sidenav li:hover a {
+	background-color: transparent;
+}
+.control-title {
+	margin-top: 0;
+}
+.mode {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	cursor: pointer;
+}
+.current-mode {
+	background: #F5F5F5;
+}
+.elem-img {
+	width: 100%;
+	height: auto;
+}
+#time-slider {
+	margin: 20px auto;
+	padding: 0 6px;
+	border-radius: 0;
+	border: 0;
+	box-shadow: none;
+	background: #EEE;
+}
+#time-slider .noUi-handle {
+	border: 0;
+	box-shadow: none;
+	width: 12px;
+	height: 18px;
+	top: 0;
+	left: -6px;
+	border-radius: 0;
+	background: #5BC0DE;
+}
+#time-slider .noUi-handle:before, #time-slider .noUi-handle:after {
+	display: none;
+	width: 0;
+	height: 0;
+}
+#time-show {
+	line-height: 44px;
+}
+
+#score-bar .progress-bar, #timer-bar .progress-bar {
+	-webkit-transition: none;
+	-o-transition: none;
+	transition: none;
+}
+#timer-bar {
+	margin-bottom: 0;
+}
+#question-text {
+	margin-bottom: 20px;
+}
+.keyword {
+	color: #E00;
+}
+#options-area {
+	margin-bottom: 15px;
+}
+.option {
+	width: 50%;
+	float: left;
+	border-top: 1px solid #EEE;
+	padding: 15px;
+	cursor: pointer;
+	font-size: 16px;
+}
+.option.hover {
+	background: #F5F5F5;
+}
+#option-c, #option-d {
+	border-bottom: 1px solid #EEE;
+}
+#option-a, #option-c {
+	border-right: 1px solid #EEE;
+}
+
+@media screen and (max-width: 375px) {
+	.option {
+		width: 100%;
+		float: none;
+	}
+	#option-c {
+		border-bottom: 0;
+	}
+	#option-a, #option-c {
+		border-right: 0;
+	}
+}
