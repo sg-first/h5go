@@ -11,7 +11,7 @@
 	<entry herf=2.htm context=栏目2>
 </sidebar>
 
-<block title=普通块>
+<block title=普通块 underline=说明：>
 	<content=一句普通的话>
 	<other>
 		<h4>这里可以写HTML</h4>
