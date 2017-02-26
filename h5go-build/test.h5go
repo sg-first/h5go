@@ -1,21 +1,25 @@
-<title=主页>
+<title content=主页>
 
-<navbar herf=index.htm content=主页>
+<navbar>
+	<mainentry herf=index.htm content=主页>
 	<entry href=1.htm content=栏目1>
 	<rightentry href=2.htm content=栏目2>
 </navbar>
 
-<sidebar>
-	<entry herf=index.htm context=主页 choosed=true>
-	<entry herf=1.htm context=栏目1>
-	<entry herf=2.htm context=栏目2>
-</sidebar>
+<container>
+	<sidebar>
+		<mainentry herf=index.htm context=主页>
+		<entry herf=1.htm context=栏目1>
+		<entry herf=2.htm context=栏目2>
+	</sidebar>
 
-<block title=普通块 underline=说明：>
-	<content=一句普通的话>
-	<other>
-		<h4>这里可以写HTML</h4>
-	</other>
-	<button herf=but.htm content=测试按钮>
-	<button herf=but.htm content=不可用的测试按钮 abled=false>
-</block>
+	<block>
+		<title content=普通块>
+		<other>
+			<h4>这里可以写HTML</h4>
+		</other>
+		<p content=一句普通的话>
+		<button herf=but.htm content=测试按钮>
+		<disbutton herf=but.htm content=不可用的测试按钮>
+	</block>
+</container>
