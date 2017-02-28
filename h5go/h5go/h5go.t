@@ -1,6 +1,7 @@
 ﻿var makepath
 var path
 var inipath
+var codeinipath
 var isError
 
 function output(str)
@@ -17,8 +18,6 @@ end
 function 热键0_热键()
     isError=false
     output("-----start: 开始构建-----")
-    output("初始化栈状态")
-    initStack()
     output("创建构建文件夹")
     makepath=strcat(path,"build")
     folderdelete(makepath)
@@ -30,6 +29,8 @@ function 热键0_热键()
     strsplit(buildtxt,",",allcodepath) //获得所有等构建h5go文件
     
     for(var i = 0; i < arraysize(allcodepath); i++)
+        output("初始化栈状态")
+        initStack()
         PCodeFile(allcodepath[i]) //本函数直接承包从读文件到写文件
     end
 end
@@ -41,6 +42,7 @@ end
 function h5go_初始化()
     path=sysgetcurrentpath()
     inipath=strcat(path,"build.txt")
+    codeinipath=strcat(path,"templet\\code.ini")
 end
 
 function PCodeFile(codepath)
@@ -69,7 +71,7 @@ function prepro(str)
             popStack()
             return ""
         end
-        return str //不是那个就是HTML代码,原样返回即可
+        //fix me
     end
     
     //不在other区块内,都是一样的格式
@@ -85,10 +87,10 @@ function prepro(str)
     if(isChar(str,"/"))
         //区块结尾
         //获取区块名
-		var blockName=getblockName(str)
-		if(isError) //解析错误(没有终结符)直接停止
-			return ""
-		end
+        var blockName=getblockName(str)
+        if(isError) //解析错误(没有终结符)直接停止
+            return ""
+        end
         str=strcut(str,strlen(blockName)) //消耗字符
         str=removeChar(str," ") //每结束一部分解析都必须去空格
         if(isChar(str,">")==false||strlen(str)!=strlen(">")) //获取到区块名之后,下一个字符必须是>
@@ -100,54 +102,58 @@ function prepro(str)
             mistake("区块头与区块结尾不对应")
             return ""
         end
+        
+        var ret=tranBlockEnd(blockName)
         popStack()
-        return tranBlockEnd(blockName)
+        return ret
     else
         //区块开头
-		//获取区块名
-		var blockName=getblockName(str)
-		if(isError) //解析错误(没有终结符)直接停止
-			return ""
-		end
-		pushStack(blockName)
-		str=strcut(str,strlen(blockName)) //消耗字符
-		str=removeChar(str," ") //每结束一部分解析都必须去空格
+        //获取区块名
+        var blockName=getblockName(str)
+        if(isError) //解析错误(没有终结符)直接停止
+            return ""
+        end
+        str=strcut(str,strlen(blockName)) //消耗字符
+        str=removeChar(str," ") //每结束一部分解析都必须去空格
         
-		
-		if(isChar(str,">")) //检查该区块是否没写参数
+        
+        if(isChar(str,">")) //检查该区块是否没写参数
             //没写参数
-			if(strlen(str)!=strlen(">")) //确认>后面没有字符
-				mistake("区块头结束后必须换行")
-				return ""
-			end
-			return tranVoidBlockHead(blockName)
-		end
+            if(strlen(str)!=strlen(">")) //确认>后面没有字符
+                mistake("区块头结束后必须换行")
+                return ""
+            end
+            
+            var ret=tranVoidBlockHead(blockName)
+            pushStack(blockName) //目前来讲,不写参数必然不是单行,可以压栈
+            return ret
+        end
         
         //写了参数
         var parList
         
         while(1) //循环获取所有的参数名-值对
-			//开始获取参数名
-			var parName=getparName(str)
-			if(isError) //解析错误(没有终结符)直接停止
-				return ""
-			end
-			str=strcut(str,strlen(parName)) //消耗字符
-			str=removeChar(str," ") //每结束一部分解析都必须去空格
-			if(isChar(str,"=")==false)
-				mistake("每个区块参数必须有一个值")
-				return ""
-			end
-			str=strcut(str,1,true) //去掉=
-			str=removeChar(str," ") //每结束一部分解析都必须去空格
-			//开始获取参数值
-			var parVal=getparVal(str)
-			if(isError) //解析错误(没有终结符)直接停止
-				return ""
-			end
-			str=strcut(str,strlen(parVal)) //消耗字符
-			str=removeChar(str," ") //每结束一部分解析都必须去空格
-			arraypush(parList,parName,parVal)
+            //开始获取参数名
+            var parName=getparName(str)
+            if(isError) //解析错误(没有终结符)直接停止
+                return ""
+            end
+            str=strcut(str,strlen(parName)) //消耗字符
+            str=removeChar(str," ") //每结束一部分解析都必须去空格
+            if(isChar(str,"=")==false)
+                mistake("每个区块参数必须有一个值")
+                return ""
+            end
+            str=strcut(str,1,true) //去掉=
+            str=removeChar(str," ") //每结束一部分解析都必须去空格
+            //开始获取参数值
+            var parVal=getparVal(str)
+            if(isError) //解析错误(没有终结符)直接停止
+                return ""
+            end
+            str=strcut(str,strlen(parVal)) //消耗字符
+            str=removeChar(str," ") //每结束一部分解析都必须去空格
+            arraypush(parList,parName,parVal)
             
             if(isChar(str,">"))
                 break
@@ -159,12 +165,21 @@ function prepro(str)
         end
         
         if(isError) //解析错误(获取参数过程中耗尽所有字符)直接停止
-			return ""
-		end
+            return ""
+        end
         if(strlen(str)!=strlen(">")) //确认>后面没有字符
-			mistake("区块头结束后必须换行")
-			return ""
-		end
+            mistake("区块头结束后必须换行")
+            return ""
+        end
+        
+        if(isSingleLine(blockName)==false)
+            pushStack(blockName) //确认不是单行区块再压栈
+            //目前没有多行有参数的区块,所以直接报错
+            mistake("不存在这种参数表的区块")
+            return ""
+        else
+            return tranSingleLineHead(blockName,parList)
+        end
         
     end
 end
