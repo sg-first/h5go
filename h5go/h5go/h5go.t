@@ -3,6 +3,9 @@ var path
 var inipath
 var codeinipath
 var isError
+//报错用
+var nowFile
+var nowLine
 
 function output(str)
     str=strcat(str,"\r\n")
@@ -12,6 +15,12 @@ end
 function mistake(str)
     str=strcat("-----error: ",str)
     output(strcat(str,"-----"))
+    
+    str=strcat("-----位于",nowFile)
+    str=strcat(str,"的第")
+    str=strcat(str,cint(nowLine))
+    output(strcat(str,"行"))
+    
     isError=true
 end
 
@@ -29,10 +38,16 @@ function 热键0_热键()
     strsplit(buildtxt,",",allcodepath) //获得所有等构建h5go文件
     
     for(var i = 0; i < arraysize(allcodepath); i++)
+        nowFile=allcodepath[i]
         output("初始化栈状态")
         initStack()
         PCodeFile(allcodepath[i]) //本函数直接承包从读文件到写文件
     end
+    
+    output("所有文件编译完成,开始拷贝资源")
+    foldercreate(strcat(makepath,"assets"))
+    foldercopy(strcat(path,"assets"),makepath)
+    output("构建完成")
 end
 
 function 构建_点击()
@@ -46,19 +61,25 @@ function h5go_初始化()
 end
 
 function PCodeFile(codepath)
-    output(strcat("预处理文件",codepath))
+    output(strcat("编译文件",codepath))
     var newcode=""
-    var code=filereadex(strcat(path,codepath))
+    var code=readFile(codepath)
     var ary
     
     strsplit(code,"\r\n",ary)
     for(var i = 0; i < arraysize(ary); i++)
+        nowLine=i+1
         newcode=strcat(newcode,prepro(ary[i]))
         newcode=strcat(newcode,"\r\n")
         if(isError)
             return
         end
     end
+    
+    output(strcat("编译完成",codepath))
+    var filename=strreplace(codepath,".h5go","")
+    filename=strcat(filename,".html")
+    writeCode(newcode,filename)
 end
 
 
@@ -71,7 +92,7 @@ function prepro(str)
             popStack()
             return ""
         end
-        //fix me
+        return tranOtherContent(str)
     end
     
     //不在other区块内,都是一样的格式
