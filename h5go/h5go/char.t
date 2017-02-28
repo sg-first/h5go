@@ -56,9 +56,5 @@ function removeChar(str,char)
 end
 
 function isChar(str,char)
-    var Rchar=strleft(str,1)
-    if(Rchar==char)
-        return true
-    end
-    return false
+    return strleft(str,1)==char)
 end
