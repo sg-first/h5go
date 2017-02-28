@@ -8,7 +8,13 @@ function getNowStack(layer=1)
 end
 
 function popStack()
-    arraydeletepos(stack,arraysize(stack)-1)
+    var len=arraysize(stack)
+    var newstack=array()
+    for(var i = 0; i < len-1; i++)
+        arraypush(newstack,stack[i])
+    end
+    arrayclear(stack)
+    stack=newstack
 end
 
 function pushStack(blockName)
@@ -17,6 +23,7 @@ end
 
 function initStack()
     arrayclear(stack)
+    stack=array()
     //初始化一堆零散状态
     initnavbarState()
     initContainer_sidebarState()
@@ -89,7 +96,7 @@ function tranBlockEnd(blockName)
     end
     if(blockName=="block")
         var ret=readFile("templet\\container\\block.html")
-        ret=strreplace(ret,"_内容",container_sidebarReplace["_内容"])
+        ret=strreplace(ret,"_内容",container_blockReplace["_内容"])
         initcontainer_blockState()
         return ret
     end
@@ -104,7 +111,7 @@ function tranBlockEnd(blockName)
         ret=strreplace(ret,"_前内容",navbarReplace["_前内容"])
         ret=strreplace(ret,"_后内容",navbarReplace["_后内容"])
         initnavbarState()
-        return readFile("templet\\navbar\\end.html")
+        return strcat(ret,readFile("templet\\navbar\\end.html"))
     end
     if(blockName=="container")
         return readFile("templet\\container\\end.html")
@@ -132,27 +139,30 @@ var haveNavbarMainentry
 function initnavbarState()
     haveNavbarMainentry=false
     arrayclear(navbarReplace)
-    arraypush(navbarReplace,"_前内容","")
-    arraypush(navbarReplace,"_后内容","")
+    navbarReplace=array()
+    arraypush(navbarReplace,"","_前内容")
+    arraypush(navbarReplace,"","_后内容")
 end
 //container_sidebar
 var container_sidebarReplace //list
 function initContainer_sidebarState()
     arrayclear(container_sidebarReplace)
-    arraypush(container_sidebarReplace,"_内容","")
+    container_sidebarReplace=array()
+    arraypush(container_sidebarReplace,"","_内容")
 end
 //container_block
 var container_blockReplace //list
 function initcontainer_blockState()
     arrayclear(container_blockReplace)
-    arraypush(container_blockReplace,"_内容","") 
+    container_blockReplace=array()
+    arraypush(container_blockReplace,"","_内容") 
 end
 //没涉及好搞的零散状态结束
 function tranSingleLineHead(blockName,parList)
     var nowStack=getNowStack()
     
     if(nowStack=="")
-        if(nowStack=="head")
+        if(blockName=="head")
             var ret=readFile("templet\\head.html")
             ret=strreplace(ret,"页面名",parList["title"])
             return ret
@@ -173,7 +183,7 @@ function tranSingleLineHead(blockName,parList)
             var _mainentry=filereadini("navbar","_mainentry",codeinipath)
             _mainentry=strreplace(_mainentry,"链接",parList["herf"])
             _mainentry=strreplace(_mainentry,"文本",parList["content"])
-            arraypush(navbarReplace,"_mainentry",_mainentry)
+            arraypush(navbarReplace,_mainentry,"_mainentry")
             return ""
         end
         
@@ -181,7 +191,7 @@ function tranSingleLineHead(blockName,parList)
             var entry=filereadini("navbar","entry",codeinipath)
             entry=strreplace(entry,"链接",parList["herf"])
             entry=strreplace(entry,"文本",parList["content"])
-            navbarReplace["_前内容"]=navbarReplace["_前内容"]+entry
+            navbarReplace["_前内容"]=strcat(navbarReplace["_前内容"],entry)
             return ""
         end
         
@@ -189,7 +199,7 @@ function tranSingleLineHead(blockName,parList)
             var rightentry=filereadini("navbar","entry",codeinipath)
             rightentry=strreplace(rightentry,"链接",parList["herf"])
             rightentry=strreplace(rightentry,"文本",parList["content"])
-            navbarReplace["_后内容"]=navbarReplace["_后内容"]+rightentry
+            navbarReplace["_后内容"]=strcat(navbarReplace["_后内容"],rightentry)
             return ""
         end
         
@@ -202,7 +212,7 @@ function tranSingleLineHead(blockName,parList)
         if(blockName=="mainentry")
             var mainentry=filereadini("container_sidebar","mainentry",codeinipath)
             mainentry=strreplace(mainentry,"文本",parList["content"])
-            container_sidebarReplace["_内容"]=container_sidebarReplace["_内容"]+mainentry
+            container_sidebarReplace["_内容"]=strcat(container_sidebarReplace["_内容"],mainentry)
             return ""
         end
         
@@ -210,7 +220,7 @@ function tranSingleLineHead(blockName,parList)
             var entry=filereadini("container_sidebar","entry",codeinipath)
             entry=strreplace(entry,"链接",parList["herf"])
             entry=strreplace(entry,"文本",parList["content"])
-            container_sidebarReplace["_内容"]=container_sidebarReplace["_内容"]+entry
+            container_sidebarReplace["_内容"]=strcat(container_sidebarReplace["_内容"],entry)
             return ""
         end
         
@@ -223,21 +233,21 @@ function tranSingleLineHead(blockName,parList)
         if(blockName=="title")
             var title=filereadini("container_block","title",codeinipath)
             title=strreplace(title,"文本",parList["content"])
-            container_blockReplace["_内容"]=container_blockReplace["_内容"]+title
+            container_blockReplace["_内容"]=strcat(container_blockReplace["_内容"],title)
             return ""
         end
         
         if(blockName=="p")
             var p=filereadini("container_block","p",codeinipath)
             p=strreplace(p,"文本",parList["content"])
-            container_blockReplace["_内容"]=container_blockReplace["_内容"]+p
+            container_blockReplace["_内容"]=strcat(container_blockReplace["_内容"],p)
             return ""
         end
         
         if(blockName=="disbutton")
             var disbutton=filereadini("container_block","disbutton",codeinipath)
             disbutton=strreplace(disbutton,"文本",parList["content"])
-            container_blockReplace["_内容"]=container_blockReplace["_内容"]+disbutton
+            container_blockReplace["_内容"]=strcat(container_blockReplace["_内容"],disbutton)
             return ""
         end
         
@@ -245,7 +255,7 @@ function tranSingleLineHead(blockName,parList)
             var button=filereadini("container_block","button",codeinipath)
             button=strreplace(button,"链接",parList["herf"])
             button=strreplace(button,"文本",parList["content"])
-            container_blockReplace["_内容"]=container_blockReplace["_内容"]+button
+            container_blockReplace["_内容"]=strcat(container_blockReplace["_内容"],button)
             return ""
         end
         
@@ -266,7 +276,7 @@ function tranOtherContent(str)
     end
     
     if(nowStack=="block")
-        container_blockReplace["_内容"]=container_blockReplace["_内容"]+str
+        container_blockReplace["_内容"]=strcat(container_blockReplace["_内容"],str)
         return ""
     end
     

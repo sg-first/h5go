@@ -1,25 +1,25 @@
-<head title=主页>
+<head title=��ҳ>
 
 <navbar>
-	<mainentry herf=index.htm content=主页>
-	<entry href=1.htm content=栏目1>
-	<rightentry href=2.htm content=栏目2>
+	<mainentry herf=index.htm content=��ҳ>
+	<entry href=1.htm content=��Ŀ1>
+	<rightentry href=2.htm content=��Ŀ2>
 </navbar>
 
 <container>
 	<sidebar>
-		<mainentry herf=index.htm context=主页>
-		<entry herf=1.htm context=栏目1>
-		<entry herf=2.htm context=栏目2>
+		<mainentry herf=index.htm content=��ҳ>
+		<entry herf=1.htm content=��Ŀ1>
+		<entry herf=2.htm content=��Ŀ2>
 	</sidebar>
 
 	<block>
-		<title content=普通块>
+		<title content=��ͨ��>
 		<other>
-			<h4>这里可以写HTML</h4>
+			<h4>�������дHTML</h4>
 		</other>
-		<p content=一句普通的话>
-		<button herf=but.htm content=测试按钮>
-		<disbutton herf=but.htm content=不可用的测试按钮>
+		<p content=һ����ͨ�Ļ�>
+		<button herf=but.htm content=���԰�ť>
+		<disbutton herf=but.htm content=�����õĲ��԰�ť>
 	</block>
 </container>

@@ -19,7 +19,7 @@ function mistake(str)
     str=strcat("-----位于",nowFile)
     str=strcat(str,"的第")
     str=strcat(str,cint(nowLine))
-    output(strcat(str,"行"))
+    output(strcat(str,"行-----"))
     
     isError=true
 end
@@ -42,6 +42,10 @@ function 热键0_热键()
         output("初始化栈状态")
         initStack()
         PCodeFile(allcodepath[i]) //本函数直接承包从读文件到写文件
+        if(isError)
+            output("发生错误,编译终止")
+            return
+        end
     end
     
     output("所有文件编译完成,开始拷贝资源")
@@ -64,6 +68,7 @@ function PCodeFile(codepath)
     output(strcat("编译文件",codepath))
     var newcode=""
     var code=readFile(codepath)
+    code=strreplace(code,"	"," ")
     var ary
     
     strsplit(code,"\r\n",ary)
@@ -76,6 +81,7 @@ function PCodeFile(codepath)
         end
     end
     
+    newcode=strcat(newcode,readFile("templet\\end.html"))
     output(strcat("编译完成",codepath))
     var filename=strreplace(codepath,".h5go","")
     filename=strcat(filename,".html")
@@ -84,6 +90,10 @@ end
 
 
 function prepro(str)
+    if(str=="")
+        return ""
+    end
+    
     str=deleteSpace(str)
     str=removeChar(str," ") //去空格
     
@@ -108,6 +118,7 @@ function prepro(str)
     if(isChar(str,"/"))
         //区块结尾
         //获取区块名
+        str=strcut(str,1,true)
         var blockName=getblockName(str)
         if(isError) //解析错误(没有终结符)直接停止
             return ""
@@ -151,7 +162,7 @@ function prepro(str)
         end
         
         //写了参数
-        var parList
+        var parList=array()
         
         while(1) //循环获取所有的参数名-值对
             //开始获取参数名
@@ -174,7 +185,7 @@ function prepro(str)
             end
             str=strcut(str,strlen(parVal)) //消耗字符
             str=removeChar(str," ") //每结束一部分解析都必须去空格
-            arraypush(parList,parName,parVal)
+            arraypush(parList,parVal,parName)
             
             if(isChar(str,">"))
                 break
