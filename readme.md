@@ -7,7 +7,9 @@ labels
 ### head
 关于页面整体信息的设置
 * title:主页标题
-`<head title=主页标题>`
+```
+<head title=主页标题>
+```
 
 ### navbar
 顶端导航栏内容的设置
@@ -69,18 +71,24 @@ labels
 #### p
 正文（可在container内，除other块外任意层级使用）
 * content:正文内容
-`<p content=一句普通的话>`
+```
+<p content=一句普通的话>
+```
 
 #### button
 可用的按钮（可在container内，除other块外任意层级使用）
 * content:按钮标题
 * herf:链接到的地址
-`<button herf=but.htm content=测试按钮>`
+```
+<button herf=but.htm content=测试按钮>
+```
 
 #### disbutton
 不可用的按钮（可在container内，除other块外任意层级使用）
 * content:按钮标题
-`<disbutton content=不可用的测试按钮>`
+```
+<disbutton content=不可用的测试按钮>
+```
 
 #### other
 嵌入的HTML代码
