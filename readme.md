@@ -5,100 +5,98 @@ H5go is a XML style markup language. It package some of the effects of bootstrap
 labels
 -------------
 ### head
-¹ØÓÚÒ³ÃæÕûÌåĞÅÏ¢µÄÉèÖÃ
-* title:Ö÷Ò³±êÌâ
+å…³äºé¡µé¢æ•´ä½“ä¿¡æ¯çš„è®¾ç½®
+* title:ä¸»é¡µæ ‡é¢˜
 ```
-<head title=Ö÷Ò³±êÌâ>
+<head title=ä¸»é¡µæ ‡é¢˜>
 ```
 
 ### navbar
-¶¥¶Ëµ¼º½À¸ÄÚÈİµÄÉèÖÃ
+é¡¶ç«¯å¯¼èˆªæ å†…å®¹çš„è®¾ç½®
 #### mainentry
-Éè¶¨µ¼º½À¸×îÇ°¶ËµÄĞÑÄ¿Ñ¡Ïî
-* herf:Á´½Óµ½µÄµØÖ·
-* content:ÏÔÊ¾µÄÎÄ×Ö
+è®¾å®šå¯¼èˆªæ æœ€å‰ç«¯çš„é†’ç›®é€‰é¡¹
+* herf:é“¾æ¥åˆ°çš„åœ°å€
+* content:æ˜¾ç¤ºçš„æ–‡å­—
 #### entry
-ÁÚ½Ó×îÇ°¶ËµÄÑ¡Ïî£¬¿ÉÉè¶¨¶à¸ö
-* herf:Á´½Óµ½µÄµØÖ·
-* content:ÏÔÊ¾µÄÎÄ×Ö
+é‚»æ¥æœ€å‰ç«¯çš„é€‰é¡¹ï¼Œå¯è®¾å®šå¤šä¸ª
+* herf:é“¾æ¥åˆ°çš„åœ°å€
+* content:æ˜¾ç¤ºçš„æ–‡å­—
 #### rightentry
-Éè¶¨µ¼º½À¸×îÓÒ¶ËµÄÑ¡Ïî
-* herf:Á´½Óµ½µÄµØÖ·
-* content:ÏÔÊ¾µÄÎÄ×Ö
+è®¾å®šå¯¼èˆªæ æœ€å³ç«¯çš„é€‰é¡¹
+* herf:é“¾æ¥åˆ°çš„åœ°å€
+* content:æ˜¾ç¤ºçš„æ–‡å­—
 ```
 <navbar>
-	<mainentry herf=index.htm content=Ö÷Ò³>
-	<entry href=1.htm content=À¸Ä¿1>
-	<rightentry href=2.htm content=À¸Ä¿2>
+	<mainentry herf=index.htm content=ä¸»é¡µ>
+	<entry href=1.htm content=æ ç›®1>
+	<rightentry href=2.htm content=æ ç›®2>
 </navbar>
 ```
 
 ### container
-ÍøÒ³ÖĞ²¿µÄÄÚÈİ
+ç½‘é¡µä¸­éƒ¨çš„å†…å®¹
 
 #### sidebar
-×ó¶Ëµ¼º½À¸ÄÚÈİµÄÉèÖÃ
+å·¦ç«¯å¯¼èˆªæ å†…å®¹çš„è®¾ç½®
 ##### mainentry
-Éè¶¨µ¼º½À¸×î¶¥¶ËµÄĞÑÄ¿Ñ¡Ïî
-* herf:Á´½Óµ½µÄµØÖ·
-* content:ÏÔÊ¾µÄÎÄ×Ö
+è®¾å®šå¯¼èˆªæ æœ€é¡¶ç«¯çš„é†’ç›®é€‰é¡¹
+* herf:é“¾æ¥åˆ°çš„åœ°å€
+* content:æ˜¾ç¤ºçš„æ–‡å­—
 ##### entry
-ÁÚ½Ó×îÇ°¶ËµÄÑ¡Ïî£¬¿ÉÉè¶¨¶à¸ö
-* herf:Á´½Óµ½µÄµØÖ·
-* content:ÏÔÊ¾µÄÎÄ×Ö
+é‚»æ¥æœ€å‰ç«¯çš„é€‰é¡¹ï¼Œå¯è®¾å®šå¤šä¸ª
+* herf:é“¾æ¥åˆ°çš„åœ°å€
+* content:æ˜¾ç¤ºçš„æ–‡å­—
 ```
 <sidebar>
-	<mainentry herf=index.htm content=Ö÷Ò³>
-	<entry herf=1.htm content=À¸Ä¿1>
-	<entry herf=2.htm content=À¸Ä¿2>
+	<mainentry herf=index.htm content=ä¸»é¡µ>
+	<entry herf=1.htm content=æ ç›®1>
+	<entry herf=2.htm content=æ ç›®2>
 </sidebar>
 ```
 
 #### block
-ÍøÒ³ÖĞµÄÄÚÈİ¿é£¬¿ÉÉè¶¨¶à¸ö
+ç½‘é¡µä¸­çš„å†…å®¹å—ï¼Œå¯è®¾å®šå¤šä¸ª
 ##### title
-¿éµÄÖ÷±êÌâ
-* content:±êÌâÄÚÈİ
+å—çš„ä¸»æ ‡é¢˜
+* content:æ ‡é¢˜å†…å®¹
 ```
 <block>
-	<title content=ÆÕÍ¨¿é>
-	<p content=Ò»¾äÆÕÍ¨µÄ»°>
-	<button herf=but.htm content=²âÊÔ°´Å¥>
-	<disbutton herf=but.htm content=²»¿ÉÓÃµÄ²âÊÔ°´Å¥>
+	<title content=æ™®é€šå—>
+	<p content=ä¸€å¥æ™®é€šçš„è¯>
+	<button herf=but.htm content=æµ‹è¯•æŒ‰é’®>
+	<disbutton herf=but.htm content=ä¸å¯ç”¨çš„æµ‹è¯•æŒ‰é’®>
 </block>
 ```
 
 #### p
-ÕıÎÄ£¨¿ÉÔÚcontainerÄÚ£¬³ıother¿éÍâÈÎÒâ²ã¼¶Ê¹ÓÃ£©
-* content:ÕıÎÄÄÚÈİ
+æ­£æ–‡ï¼ˆå¯åœ¨containerå†…ï¼Œé™¤otherå—å¤–ä»»æ„å±‚çº§ä½¿ç”¨ï¼‰
+* content:æ­£æ–‡å†…å®¹
 ```
-<p content=Ò»¾äÆÕÍ¨µÄ»°>
+<p content=ä¸€å¥æ™®é€šçš„è¯>
 ```
 
 #### button
-¿ÉÓÃµÄ°´Å¥£¨¿ÉÔÚcontainerÄÚ£¬³ıother¿éÍâÈÎÒâ²ã¼¶Ê¹ÓÃ£©
-* content:°´Å¥±êÌâ
-* herf:Á´½Óµ½µÄµØÖ·
+å¯ç”¨çš„æŒ‰é’®ï¼ˆå¯åœ¨containerå†…ï¼Œé™¤otherå—å¤–ä»»æ„å±‚çº§ä½¿ç”¨ï¼‰
+* content:æŒ‰é’®æ ‡é¢˜
+* herf:é“¾æ¥åˆ°çš„åœ°å€
 ```
-<button herf=but.htm content=²âÊÔ°´Å¥>
+<button herf=but.htm content=æµ‹è¯•æŒ‰é’®>
 ```
 
 #### disbutton
-²»¿ÉÓÃµÄ°´Å¥£¨¿ÉÔÚcontainerÄÚ£¬³ıother¿éÍâÈÎÒâ²ã¼¶Ê¹ÓÃ£©
-* content:°´Å¥±êÌâ
+ä¸å¯ç”¨çš„æŒ‰é’®ï¼ˆå¯åœ¨containerå†…ï¼Œé™¤otherå—å¤–ä»»æ„å±‚çº§ä½¿ç”¨ï¼‰
+* content:æŒ‰é’®æ ‡é¢˜
 ```
-<disbutton content=²»¿ÉÓÃµÄ²âÊÔ°´Å¥>
+<disbutton content=ä¸å¯ç”¨çš„æµ‹è¯•æŒ‰é’®>
 ```
 
 #### other
-Ç¶ÈëµÄHTML´úÂë
-##### js
-ÔÚHTML´úÂëÖĞÇ¶ÈëµÄjs´úÂë
+åµŒå…¥çš„HTMLä»£ç 
 ```
 <other>
-	<h4>ÕâÀï¿ÉÒÔĞ´HTML</h4>
-	<js>
+	<h4>è¿™é‡Œå¯ä»¥å†™HTML</h4>
+	<script>
 		var a=1;
-	</js>
+	</script>
 </other>
 ```
